@@ -68,7 +68,6 @@ window.renderStatistics = function (ctx, names, times) {
     } else {
       barColor = generateColor();
     }
-    
     createResults(ctx, times[i], names[i], rectX, rectY, rectHeight, textY, textColor, barColor);
   }
 };
