@@ -26,14 +26,11 @@ var getMaxElement = function (arr) {
   return maxElement;
 };
 
-function generateColor(ctx, color) {
-  ctx.fillStyle = color;
+function generateColor() {
+  return 'hsl(240,' + Math.floor(Math.random() * 100) + '%,50%)';
 }
 
-function createResults(ctx, maxTime, times, name, rectX, textColor, barColor) {
-  var rectHeight = (BAR_HEIGHT * times) / maxTime;
-  var rectY = CLOUD_Y + BAR_HEIGHT - rectHeight + BAR_GAP * 2 - GAP;
-  var textY = CLOUD_HEIGHT - rectHeight - FONT_GAP * 2 - GAP;
+function createResults(ctx, maxTime, times, name, rectX, rectY, rectHeight, textY, textColor, barColor) {
   ctx.fillStyle = barColor;
   ctx.fillRect(rectX, rectY, BAR_WIDTH, rectHeight);
   ctx.fillStyle = textColor;
@@ -53,14 +50,20 @@ window.renderStatistics = function (ctx, names, times) {
   var rectX;
   var textColor = '#000';
   var barColor;
+  var rectHeight;
+  var rectY;
+  var textY;
   for (var i = 0; i < names.length; i++) {
     rectX = CLOUD_X + BAR_GAP + (BAR_GAP + BAR_WIDTH) * i;
+    rectHeight = (BAR_HEIGHT * times[i]) / maxTime;
+    rectY = CLOUD_Y + BAR_HEIGHT - rectHeight + BAR_GAP * 2 - GAP;
+    textY = CLOUD_HEIGHT - rectHeight - FONT_GAP * 2 - GAP;
     if (names[i] === 'Вы') {
-      barColor = generateColor(ctx, 'rgba(255, 0, 0 , 1)');
+      barColor = 'rgba(255, 0, 0 , 1)';
     } else {
-      barColor = generateColor(ctx, 'hsl(240,' + Math.floor(Math.random() * 100) + '%,50%)');
+      barColor = generateColor();
     }
-    createResults(ctx, maxTime, times[i], names[i], rectX, textColor, barColor);
+    createResults(ctx, maxTime, times[i], names[i], rectX, rectY, rectHeight, textY, textColor, barColor);
   }
 };
 
